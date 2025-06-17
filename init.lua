@@ -62,6 +62,16 @@ vim.opt.expandtab = true -- Convert tabs to spaces
 ----------------------------------
 require("lazy").setup({
 	{
+		"L3MON4D3/LuaSnip",
+		-- follow latest release.
+		version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+		-- install jsregexp (optional!).
+		build = "make install_jsregexp",
+		config = function()
+			require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/lua/snippets" })
+		end,
+	},
+	{
 		"ptdewey/pendulum-nvim",
 		config = function()
 			require("pendulum").setup()
@@ -87,6 +97,16 @@ require("lazy").setup({
 				},
 			})
 		end,
+	},
+	{
+		"saghen/blink.cmp",
+		version = "1.*",
+		-- `main` is untested, please open a PR if you've confirmed it works as expected
+		dependencies = { "rafamadriz/friendly-snippets" },
+		snippets = { preset = "luasnip" },
+		sources = {
+			default = { "lsp", "path", "snippets", "buffer" },
+		},
 	},
 	{
 		-- Main LSP Configuration
