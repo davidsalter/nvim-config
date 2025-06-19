@@ -522,6 +522,19 @@ require("lazy").setup({
 			return conf
 		end,
 	},
+	{
+		"Shatur/neovim-session-manager",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		lazy = false,
+		config = function()
+			local config = require("session_manager.config")
+			require("session_manager").setup({
+				autoload_mode = config.AutoloadMode.CurrentDir,
+				autosave_last_session = true,
+				autosave_ignore_dirs = { "~/" },
+			})
+		end,
+	},
 	{ -- Collection of various small independent plugins/modules
 		"echasnovski/mini.nvim",
 		config = function()
@@ -554,9 +567,6 @@ require("lazy").setup({
 			statusline.section_location = function()
 				return "%2l:%-2v"
 			end
-
-			-- ... and there is more!
-			--  Check out: https://github.com/echasnovski/mini.nvim
 		end,
 	},
 	{ -- Highlight, edit, and navigate code
