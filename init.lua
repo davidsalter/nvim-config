@@ -719,8 +719,6 @@ require("lazy").setup({
 			"nvim-neotest/nvim-nio",
 			"williamboman/mason.nvim",
 			"jay-babu/mason-nvim-dap.nvim",
-			"leoluz/nvim-dap-go",
-			{ "mfussenegger/nvim-dap-python", ft = "python" },
 		},
 		keys = function(_, keys)
 			local dap = require("dap")
@@ -784,8 +782,6 @@ require("lazy").setup({
 			dap.listeners.after.event_initialized["dapui_config"] = dapui.open
 			dap.listeners.before.event_terminated["dapui_config"] = dapui.close
 			dap.listeners.before.event_exited["dapui_config"] = dapui.close
-			require("dap-go").setup({ delve = { detached = vim.fn.has("win32") == 0 } })
-			require("dap-python").setup("~/.pyenv/versions/3.12.1/bin/python")
 		end,
 	},
 	{
