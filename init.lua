@@ -62,6 +62,12 @@ vim.opt.expandtab = true -- Convert tabs to spaces
 ----------------------------------
 require("lazy").setup({
 	{
+		"barrett-ruth/live-server.nvim",
+		build = "npm install -g live-server",
+		cmd = { "LiveServerStart", "LiveServerStop" },
+		config = true,
+	},
+	{
 		"L3MON4D3/LuaSnip",
 		-- follow latest release.
 		version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
@@ -325,7 +331,9 @@ require("lazy").setup({
 				--    https://github.com/pmizio/typescript-tools.nvim
 				--
 				-- But for many setups, the LSP (`ts_ls`) will work just fine
-				-- ts_ls = {},
+				ts_ls = {},
+				cssls = {},
+				html = {},
 				--
 
 				lua_ls = {
