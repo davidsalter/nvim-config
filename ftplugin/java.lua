@@ -1,5 +1,6 @@
+local home = vim.fn.expand("$HOME")
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-local workspace_dir = "/home/david/.workspace/" .. project_name
+local workspace_dir = home .. "/.workspace/" .. project_name
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
 	-- The command that starts the language server
@@ -24,14 +25,14 @@ local config = {
 
 		-- 💀
 		"-jar",
-		"/home/david/jdtls/plugins/org.eclipse.equinox.launcher_1.7.0.v20250424-1814.jar",
+		home .. "/jdtls/plugins/org.eclipse.equinox.launcher_1.7.0.v20250424-1814.jar",
 		-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                       ^^^^^^^^^^^^^^
 		-- Must point to the                                                     Change this to
 		-- eclipse.jdt.ls installation                                           the actual version
 
 		-- 💀
 		"-configuration",
-		"/home/david/jdtls/config_linux",
+		home .. "/jdtls/config_mac",
 		-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        ^^^^^^
 		-- Must point to the                      Change to one of `linux`, `win` or `mac`
 		-- eclipse.jdt.ls installation            Depending on your system.
