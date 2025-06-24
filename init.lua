@@ -62,6 +62,14 @@ vim.opt.expandtab = true -- Convert tabs to spaces
 ----------------------------------
 require("lazy").setup({
 	{
+		"kdheepak/lazygit.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		cmd = { "LazyGit", "LazyGitConfig", "LazyGitCurrentFile", "LazyGitFilter", "LazyGitFilterCurrentFile" },
+		keys = {
+			{ "<leader>gg", "<cmd>LazyGit<cr>", desc = "Open Lazygit" },
+		},
+	},
+	{
 		"barrett-ruth/live-server.nvim",
 		build = "npm install -g live-server",
 		cmd = { "LiveServerStart", "LiveServerStop" },
@@ -334,6 +342,7 @@ require("lazy").setup({
 				ts_ls = {},
 				cssls = {},
 				html = {},
+				sqlls = {},
 				--
 
 				lua_ls = {

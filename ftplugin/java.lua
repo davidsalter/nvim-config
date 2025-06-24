@@ -74,6 +74,8 @@ local config = {
 require("jdtls").start_or_attach(config)
 
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Perform Code Action" })
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Goto definition" })
+
 local wk = require("which-key")
 wk.add({
 	{ "<leader>ev", "<cmd>lua require('jdtls').extract_variable()<CR>", desc = "Extract variable", mode = "n" },
