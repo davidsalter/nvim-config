@@ -24,8 +24,6 @@ keymap("t", "<Esc>", "<C-\\><C-N>") -- Exit terminal mode
 -- Change directory to the current file's directory
 keymap("n", "<leader>cd", '<cmd>lua vim.fn.chdir(vim.fn.expand("%:p:h"))<CR>')
 
-
-
 local opts = { noremap = true, silent = true }
 keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts) -- Go to definition
 
@@ -35,5 +33,28 @@ keymap("n", "<leader>cf", "<cmd>lua vim.lsp.buf.format()<CR>")
 
 -- Snacks
 keymap("n", "<leader>ff", "<cmd>lua Snacks.picker.files()<CR>")
+keymap("n", "<leader>fg", "<cmd>lua Snacks.picker.grep()<CR>")
 keymap("n", "<leader><space>", "<cmd>lua Snacks.picker.smart()<CR>")
 keymap("n", "<leader>gg", "<cmd>lua Snacks.lazygit()<CR>")
+
+-- DAP
+local dap = require("dap")
+keymap("n", "<F5>", function()
+	dap.continue()
+end)
+
+keymap("n", "<F10>", function()
+	dap.step_over()
+end)
+
+keymap("n", "<F11>", function()
+	dap.step_into()
+end)
+
+keymap("n", "<S-F11>", function()
+	dap.step_out()
+end)
+
+keymap("n", "<F9>", function()
+	dap.toggle_breakpoint()
+end)

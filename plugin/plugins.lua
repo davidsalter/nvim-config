@@ -1,19 +1,38 @@
-vim.pack.add({
+local plugins = {
 	{ src = "https://github.com/mason-org/mason.nvim" },
-})
+	{ src = "https://github.com/mason.org/mason-lspconfig.nvim" },
+	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("^1") },
+	{ src = "https://github.com/mrcjkb/rustaceanvim", version = "v6.8.0" },
+	{ src = "https://github.com/j-hui/fidget.nvim" },
+	{ src = "https://github.com/ptdewey/pendulum-nvim" },
+	{ src = "https://github.com/echasnovski/mini.nvim" },
+	{ src = "https://github.com/stevearc/conform.nvim" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", build = ":TSUpdate", lazy = false },
+	{ src = "https://github.com/folke/snacks.nvim", lazy = false },
+	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
+	{ src = "https://github.com/nvim-java/lua-async-await" },
+	{ src = "https://github.com/nvim-java/nvim-java-refactor" },
+	{ src = "https://github.com/nvim-java/nvim-java-core" },
+	{ src = "https://github.com/nvim-java/nvim-java-test" },
+	{ src = "https://github.com/nvim-java/nvim-java-dap" },
+	{ src = "https://github.com/javahello/spring-boot.nvim" },
+	{ src = "https://github.com/neovim/nvim-lspconfig" },
+	{ src = "https://github.com/nvim-java/nvim-java" },
+	{ src = "https://github.com/MunifTanjim/nui.nvim" },
+	{ src = "https://github.com/zapling/mason-conform.nvim" },
+}
+
+vim.pack.add({})
+for _, plugin in ipairs(plugins) do
+	vim.pack.add({
+		{ src = plugin.src, version = plugin.version, build = plugin.build, lazy = plugin.lazy },
+	})
+end
 
 require("mason").setup({})
 
-vim.pack.add({
-	{ src = "https://github.com/mason-org/mason-lspconfig.nvim" },
-})
-
 require("mason-lspconfig").setup({
-  ensure_installed = { "lua_ls", "kotlin_lsp" }
-})
-
-vim.pack.add({
-	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("^1") },
+	ensure_installed = { "lua_ls", "kotlin_lsp", "lemminx" },
 })
 
 require("blink.cmp").setup({
@@ -47,31 +66,11 @@ require("blink.cmp").setup({
 	sources = { default = { "lsp" } },
 })
 
-vim.pack.add({
-	{ src = "https://github.com/mrcjkb/rustaceanvim", version = "v6.7.0" },
-})
-
-vim.pack.add({
-	{ src = "https://github.com/j-hui/fidget.nvim" },
-})
-
 require("fidget").setup({})
-
-vim.pack.add({
-	{ src = "https://github.com/ptdewey/pendulum-nvim" },
-})
 
 require("pendulum").setup({})
 
-vim.pack.add({
-	{ src = "https://github.com/echasnovski/mini.nvim" },
-})
-
 require("mini.statusline").setup({ use_icons = vim.g.have_nerd_font })
-
-vim.pack.add({
-	{ src = "https://github.com/stevearc/conform.nvim" },
-})
 
 require("conform").setup({
 	formatters_by_ft = {
@@ -80,24 +79,15 @@ require("conform").setup({
 	},
 })
 
-vim.pack.add({
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
-})
+require("nvim-treesitter").setup()
 
 require("nvim-treesitter.configs").setup({
-	ensure_installed = { "rust", "lua" },
+	ensure_installed = { "rust", "lua", "xml" },
 	auto_install = true,
 	highlight = {
 		enable = true,
 		additional_vim_regex_highlighting = false,
 	},
-})
-vim.pack.add({
-	{ src = "https://github.com/MunifTanjim/nui.nvim" },
-})
-
-vim.pack.add({
-	{ src = "https://github.com/folke/snacks.nvim", lazy = false },
 })
 
 require("snacks").setup({
@@ -109,51 +99,46 @@ require("snacks").setup({
 	picker = { enabled = true },
 })
 
-vim.pack.add({
-  { src = "https://github.com/nvim-tree/nvim-web-devicons" }
-})
-
-
- -- Java
-vim.pack.add{
-  { src = 'https://github.com/mason-org/mason.nvim' },
-}
-
-vim.pack.add{
-  { src = 'https://github.com/nvim-java/lua-async-await' },
-}
-
-vim.pack.add{
-  { src = 'https://github.com/nvim-java/nvim-java-refactor' },
-}
-
-vim.pack.add{
-  { src = 'https://github.com/nvim-java/nvim-java-core' },
-}
-
-vim.pack.add{
-  { src = 'https://github.com/nvim-java/nvim-java-test' },
-}
-
-vim.pack.add{
-  { src = 'https://github.com/nvim-java/nvim-java-dap' },
-}
-
-vim.pack.add{
-  { src = 'https://github.com/mfussenegger/nvim-dap' },
-}
-
-vim.pack.add{
-  { src = 'https://github.com/javahello/spring-boot.nvim' },
-}
-
-vim.pack.add{
-  { src = 'https://github.com/neovim/nvim-lspconfig' },
-}
-
-vim.pack.add({
-  { src = "https://github.com/nvim-java/nvim-java" },
-})
-
 require("java").setup({})
-require('lspconfig').jdtls.setup({})
+require("lspconfig").jdtls.setup({})
+
+require("mason-conform").setup({})
+
+local dap = require("dap")
+
+dap.configurations.scala = {
+	{
+		type = "scala",
+		request = "launch",
+		name = "Run or test with input",
+		metals = {
+			runType = "runOrTestFile",
+			args = function()
+				local args_string = vim.fn.input("Arguments: ")
+				return vim.split(args_string, " +")
+			end,
+		},
+	},
+	{
+		type = "scala",
+		request = "launch",
+		name = "Run or Test",
+		metals = {
+			runType = "runOrTestFile",
+		},
+	},
+	{
+		type = "scala",
+		request = "launch",
+		name = "Test Target",
+		metals = {
+			runType = "testTarget",
+		},
+	},
+}
+
+require("metals").setup_dap()
+
+dap.listeners.after.event_initialized["auto-repl"] = function()
+	dap.repl.open()
+end
