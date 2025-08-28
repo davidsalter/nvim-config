@@ -56,7 +56,7 @@ vim.pack.add({
 	{ src = "https://github.com/catppuccin/nvim" },
 	{ src = "https://github.com/mason-org/mason.nvim" },
 	{ src = "https://github.com/scalameta/nvim-metals" },
-	{ src = "https://github.com/mason.org/mason-lspconfig.nvim" },
+	{ src = "https://github.com/mason-org/mason-lspconfig.nvim" },
 	{ src = "https://github.com/mfussenegger/nvim-dap" },
 	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("^1") },
 	--	{ src = "https://github.com/mrcjkb/rustaceanvim", version = "v6.8.0" },
